@@ -163,6 +163,8 @@ namespace Hangman.Round
 
             } while (Console.ReadLine() == "y");
 
+            SaveRound();
+
             Console.WriteLine("Thats end");
         }
 
@@ -211,7 +213,32 @@ namespace Hangman.Round
         }
 
 
+        public void SaveRound()
+        {
+            string fileName = @"..\\..\\..\\Files\\highscores.txt";
+            
+            if (File.Exists(fileName) == false)
+            {
+                using (FileStream fs = File.Create(fileName))
+                {
+                    // Add some text to file    
+                    Byte[] title = new UTF8Encoding(true).GetBytes("name| date | guessing_time | guessing_tries |guessed_word");
+                    fs.Write(title, 0, title.Length);
 
+                }
+            }
+
+            using (StreamReader sr = File.OpenText(fileName))
+            {
+                string s = "";
+                while ((s = sr.ReadLine()) != null)
+                {
+                    Console.WriteLine(s);
+                }
+            }
+
+
+        }
 
 
     }
