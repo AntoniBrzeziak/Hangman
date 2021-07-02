@@ -18,9 +18,11 @@ namespace Hangman.Round
         public List<char> Know = new List<char>();
         public List<int> Good = new List<int>();
         bool Session;
+        DateTime localDate;
 
 
-        
+
+
 
         public void PrintStatus()
         {
@@ -54,6 +56,8 @@ namespace Hangman.Round
             Session = true;
 
             Array.Fill(Guess, '_');
+
+            localDate = DateTime.Now;
 
         }
 
@@ -144,10 +148,16 @@ namespace Hangman.Round
 
                 while (Good.Count != Capital.Length && Session == true)
                 {
-                    Check();
+                    Console.WriteLine("Ysadasdasdas!");
                     PrintStatus();
+
+                    Check();
+                    Console.Clear();
                 }
 
+
+                TimeSpan timeSpan = DateTime.Now - localDate;
+                Console.WriteLine("Trials: {0}  Time: {1}", Trials, timeSpan);
                 Console.WriteLine("Do you want to play a game? y/n");
 
 
