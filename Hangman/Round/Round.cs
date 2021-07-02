@@ -9,6 +9,11 @@ namespace Hangman.Round
     {
 
         public List<string[]> Pairs = new List<string[]>();
+        public int Lives;
+        public string Capital;
+        public string Country;
+        public char[] Guess;
+
 
         public void PrintStatus()
         {
@@ -17,6 +22,17 @@ namespace Hangman.Round
 
         public void NewGame()
         {
+
+            Lives = 5;
+
+            Random Rnd = new Random();
+
+            int PairIndex = Rnd.Next(Pairs.Count);
+            Capital = Pairs[PairIndex][1];
+            Country = Pairs[PairIndex][0];
+            Guess = Capital.ToCharArray();
+
+            Array.Fill(Guess, '_');
 
         }
 
