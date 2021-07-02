@@ -17,10 +17,10 @@ namespace Hangman.Round
         public List<char> Bad = new List<char>();
         public List<char> Know = new List<char>();
         public List<int> Good = new List<int>();
+        bool Session;
 
 
-
-
+        
 
         public void PrintStatus()
         {
@@ -38,7 +38,7 @@ namespace Hangman.Round
             Lives = 5;
 
             Random Rnd = new Random();
-            Console.WriteLine(Pairs[0][0]);
+
 
             int PairIndex = Rnd.Next(Pairs.Count-1);
             Capital = Pairs[PairIndex][1];
@@ -50,6 +50,8 @@ namespace Hangman.Round
             Bad.Clear();
             Know.Clear();
             Good.Clear();
+
+            Session = true;
 
             Array.Fill(Guess, '_');
 
@@ -65,6 +67,7 @@ namespace Hangman.Round
                 if(Letter == Capital)
                 {
                     Win();
+                    return;
                 }
             }
 
@@ -108,6 +111,8 @@ namespace Hangman.Round
                 if(Lives == 0)
                 {
                     Lose();
+                    return;
+
                 }
 
             }
@@ -118,9 +123,11 @@ namespace Hangman.Round
                     Guess[a] = Capital[a];
                 }
 
-                if(Guess.ToString().ToUpper() == Capital)
+                if(Good.Count == Capital.Length)
                 {
                     Win();
+                    return;
+
                 }
 
             }
@@ -131,33 +138,34 @@ namespace Hangman.Round
 
         public void Play()
         {
-
-            NewGame();
-
-            while (Good.Count != Capital.Length)
+            do
             {
-                Check();
-                PrintStatus();
-            }
+                NewGame();
 
-            Console.WriteLine("Do you want to play a game? y/n");
+                while (Good.Count != Capital.Length && Session == true)
+                {
+                    Check();
+                    PrintStatus();
+                }
 
-            if (Console.ReadLine() == "y")
-            {
-                Play();
-            }
+                Console.WriteLine("Do you want to play a game? y/n");
+
+
+            } while (Console.ReadLine() == "y");
 
             Console.WriteLine("Thats end");
         }
 
         public void Win()
         {
+            Session = false;
             Console.WriteLine("You Win!");
         }
 
 
         public void Lose()
         {
+            Session = false;
             Console.WriteLine("You Lose!");
         }
         public Round()
