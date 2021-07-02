@@ -17,6 +17,11 @@ namespace Hangman.Round
 
         public void PrintStatus()
         {
+            Console.WriteLine(Capital);
+            Console.WriteLine(Country);
+            Console.WriteLine(Guess);
+            Console.WriteLine(Lives);
+
 
         }
 
