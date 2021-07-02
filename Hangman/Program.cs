@@ -8,13 +8,14 @@ using System.Text;
 using Hangman.Round;
 
 
-namespace Hangman
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        Console.WriteLine("Hello World!");
+        Round round = new Round();
+        round.Play();
     }
 }
+

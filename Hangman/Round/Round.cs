@@ -13,11 +13,10 @@ namespace Hangman.Round
         public string Capital;
         public string Country;
         public char[] Guess;
-        public List<char> Know = new List<char>();
-        public List<int> Good = new List<int>();
         public int Trials;
         public List<char> Bad = new List<char>();
-
+        public List<char> Know = new List<char>();
+        public List<int> Good = new List<int>();
 
 
 
@@ -39,12 +38,18 @@ namespace Hangman.Round
             Lives = 5;
 
             Random Rnd = new Random();
+            Console.WriteLine(Pairs[0][0]);
 
-            int PairIndex = Rnd.Next(Pairs.Count);
+            int PairIndex = Rnd.Next(Pairs.Count-1);
             Capital = Pairs[PairIndex][1];
             Capital = Capital.ToUpper();
             Country = Pairs[PairIndex][0];
             Guess = Capital.ToCharArray();
+
+            Trials = 0;
+            Bad.Clear();
+            Know.Clear();
+            Good.Clear();
 
             Array.Fill(Guess, '_');
 
@@ -127,6 +132,22 @@ namespace Hangman.Round
         public void Play()
         {
 
+            NewGame();
+
+            while (Good.Count != Capital.Length)
+            {
+                Check();
+                PrintStatus();
+            }
+
+            Console.WriteLine("Do you want to play a game? y/n");
+
+            if (Console.ReadLine() == "y")
+            {
+                Play();
+            }
+
+            Console.WriteLine("Thats end");
         }
 
         public void Win()
@@ -142,7 +163,7 @@ namespace Hangman.Round
         public Round()
         {
 
-            string fileName = @"countries_and_capitals.txt";
+            string fileName = @"..\\..\\..\\Files\\countries_and_capitals.txt";
 
             try
             {
