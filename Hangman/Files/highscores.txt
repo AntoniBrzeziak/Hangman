@@ -1,1 +1,4 @@
-name| date | guessing_time | guessing_tries |guessed_word
+dsz | 7/3/2021 5:19:51 AM | 00:00:04.7350958 | 0 | PRETORIA
+czxcc | 7/3/2021 5:17:02 AM | 00:00:05.6034043 | 0 | NIAMEY
+czcasra | 7/3/2021 5:16:37 AM | 00:00:09.8331881 | 0 | OUAGADOUGOU
+asd | 7/3/2021 5:22:34 AM | 00:00:14.5077860 | 0 | BANGKOK

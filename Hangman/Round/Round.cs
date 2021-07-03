@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace Hangman.Round
 {
@@ -9,6 +10,8 @@ namespace Hangman.Round
     {
 
         public List<string[]> Pairs = new List<string[]>();
+        public List<string[]> highscores = new List<string[]>();
+
         public int Lives;
         public string Capital;
         public string Country;
@@ -19,6 +22,7 @@ namespace Hangman.Round
         public List<int> Good = new List<int>();
         bool Session;
         DateTime localDate;
+        TimeSpan timeSpan;
 
 
 
@@ -156,7 +160,7 @@ namespace Hangman.Round
                 }
 
 
-                TimeSpan timeSpan = DateTime.Now - localDate;
+                timeSpan = DateTime.Now - localDate;
                 Console.WriteLine("Trials: {0}  Time: {1}", Trials, timeSpan);
                 Console.WriteLine("Do you want to play a game? y/n");
 
@@ -217,25 +221,48 @@ namespace Hangman.Round
         {
             string fileName = @"..\\..\\..\\Files\\highscores.txt";
             
+
             if (File.Exists(fileName) == false)
             {
-                using (FileStream fs = File.Create(fileName))
+                using (StreamWriter fs = File.CreateText(fileName))
                 {
-                    // Add some text to file    
-                    Byte[] title = new UTF8Encoding(true).GetBytes("name| date | guessing_time | guessing_tries |guessed_word");
-                    fs.Write(title, 0, title.Length);
 
+      
                 }
             }
 
-            using (StreamReader sr = File.OpenText(fileName))
+            Console.Clear();
+
+            Console.WriteLine("Enter your name:");
+            string name = Console.ReadLine();
+            string temp =  name+ " | " +localDate.ToString() + " | " + timeSpan.ToString() + " | " + Trials.ToString() + " | " + Capital;
+            highscores.Add(temp.Split(" | "));
+
+
+            Console.Clear();
+
+
+            string[] readText = File.ReadAllLines(fileName);
+
+            List<string>highscoreslist =  readText.ToList();
+
+            
+
+            foreach (string item in highscoreslist)
             {
-                string s = "";
-                while ((s = sr.ReadLine()) != null)
-                {
-                    Console.WriteLine(s);
-                }
+                highscores.Add(item.Split(" | "));
             }
+            
+            List<string[]> sorted = highscores.OrderBy(order => order[2]).ToList();
+
+
+
+            List<string> tempList = new List<string>();
+            foreach (string[] t in sorted)
+            {
+                tempList.Add(String.Join(" | ", t));
+            }
+            File.WriteAllLines(fileName, tempList.ToArray());
 
 
         }
