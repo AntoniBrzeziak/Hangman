@@ -116,7 +116,7 @@ namespace Hangman.Round
             {
                 Bad.Add(Letter[0]);
                 Lives--;
-                if(Lives == 0)
+                if(Lives <= 0)
                 {
                     Lose();
                     return;
