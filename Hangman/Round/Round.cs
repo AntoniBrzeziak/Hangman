@@ -77,6 +77,17 @@ namespace Hangman.Round
                     Win();
                     return;
                 }
+                else
+                {
+
+                    Lives -= 2;
+                    if (Lives <= 0)
+                    {
+                        Lose();
+                    }
+                    return;
+                    
+                }
             }
 
 
