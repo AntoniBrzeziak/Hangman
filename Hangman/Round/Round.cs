@@ -133,7 +133,6 @@ namespace Hangman.Round
 
             Know.Add(Letter[0]);
 
-            Trials++;
 
             if(Succes == false)
             {
@@ -179,6 +178,8 @@ namespace Hangman.Round
                 {
                     PrintStatus();
 
+                    Trials++;
+
                     Console.WriteLine("Do you want to guess a (l)eter or (w)ord");
                     Console.WriteLine("(l/w)?");
 
@@ -197,14 +198,41 @@ namespace Hangman.Round
 
                 timeSpan = DateTime.Now - localDate;
                 Console.WriteLine("Trials: {0}  Time: {1}", Trials, timeSpan);
+
+                SaveRound();
+
+                HighScores();
+
                 Console.WriteLine("Do you want to play a game? y/n");
 
 
             } while (Console.ReadLine() == "y");
 
-            SaveRound();
 
             Console.WriteLine("Thats end");
+        }
+
+        public void HighScores()
+        {
+
+            string fileName = @"..\\..\\..\\Files\\highscores.txt";
+
+            Console.WriteLine("HIGHSCORES:");
+            Console.WriteLine("name | date | guessing_time | guessing_tries | guessed_word");
+
+            List<string> hs = new List<string>();
+
+            string s = "";
+            int i = 0;
+            using ( StreamReader sr = File.OpenText(fileName))
+            {
+                while ((s = sr.ReadLine()) != null && i <= 10)
+                {
+                    Console.WriteLine(s);
+                    i++;
+                }
+
+            }
         }
 
         public void Win()
