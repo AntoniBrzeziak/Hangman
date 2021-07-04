@@ -30,10 +30,10 @@ namespace Hangman.Round
 
         public void PrintStatus()
         {
-            Console.WriteLine(Capital);
-            Console.WriteLine(Country);
+            Console.Clear();
+
             Console.WriteLine(Guess);
-            Console.WriteLine(Lives);
+            Console.WriteLine("Your lives: "+Lives);
             string badString=  new string(Bad.ToArray());
 
 
@@ -75,8 +75,8 @@ namespace Hangman.Round
             string Letter = Console.ReadLine();
             Letter = Letter.ToUpper();
 
-            if (Letter.Length > 1)
-            {
+
+
                 if (Letter == Capital)
                 {
                     Win();
@@ -93,13 +93,20 @@ namespace Hangman.Round
                     return;
 
                 }
-            }
+            
 
         }
 
         public void CheckLetter()
         {
             string Letter = Console.ReadLine();
+
+            if (Letter.Length != 1)
+            {
+                Console.WriteLine("Its not a letter! Try one more time:");
+                CheckLetter();
+                return;
+            }
             Letter = Letter.ToUpper();
 
 
@@ -183,23 +190,38 @@ namespace Hangman.Round
                     Console.WriteLine("Do you want to guess a (l)eter or (w)ord");
                     Console.WriteLine("(l/w)?");
 
-                    letter = Console.ReadLine().ToCharArray()[0];
+                    try
+                    {
+                        letter = Console.ReadLine().ToCharArray()[0];
+
+                    }
+                    catch (Exception Ex)
+                    {
+                        continue;
+                    }
+
+
+
 
                     if (letter == 'l')
                     {
                         CheckLetter();
-                    } else
+                    } else if (letter == 'w')
                     {
                         CheckWord();
                     }
-                    Console.Clear();
+                    else
+                    {
+
+                        continue;
+                    }
+
                 }
 
 
                 timeSpan = DateTime.Now - localDate;
                 Console.WriteLine("Trials: {0}  Time: {1}", Trials, timeSpan);
 
-                SaveRound();
 
                 HighScores();
 
@@ -238,15 +260,21 @@ namespace Hangman.Round
         public void Win()
         {
             Session = false;
+            Console.Clear();
             Console.WriteLine("You Win!");
-            Console.WriteLine("The capital of " + Country);
+            SaveRound();
+
         }
+
 
 
         public void Lose()
         {
             Session = false;
+            Console.Clear();
+
             Console.WriteLine("You Lose!");
+            Console.WriteLine(Country);
         }
         public Round()
         {
@@ -295,15 +323,12 @@ namespace Hangman.Round
                 }
             }
 
-            Console.Clear();
 
             Console.WriteLine("Enter your name:");
             string name = Console.ReadLine();
             string temp =  name+ " | " +localDate.ToString() + " | " + timeSpan.ToString() + " | " + Trials.ToString() + " | " + Capital;
             highscores.Add(temp.Split(" | "));
 
-
-            Console.Clear();
 
 
             string[] readText = File.ReadAllLines(fileName);
