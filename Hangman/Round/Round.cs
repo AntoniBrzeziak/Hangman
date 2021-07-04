@@ -211,6 +211,7 @@ namespace Hangman.Round
         {
             Session = false;
             Console.WriteLine("You Win!");
+            Console.WriteLine("The capital of " + Country);
         }
 
 
