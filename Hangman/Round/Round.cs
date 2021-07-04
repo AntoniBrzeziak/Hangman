@@ -34,6 +34,10 @@ namespace Hangman.Round
             Console.WriteLine(Country);
             Console.WriteLine(Guess);
             Console.WriteLine(Lives);
+            string badString=  new string(Bad.ToArray());
+
+
+            Console.WriteLine("Not in word: " + badString);
 
 
         }
@@ -65,14 +69,15 @@ namespace Hangman.Round
 
         }
 
-        public void Check()
+
+        public void CheckWord()
         {
             string Letter = Console.ReadLine();
             Letter = Letter.ToUpper();
 
-            if(Letter.Length > 1)
+            if (Letter.Length > 1)
             {
-                if(Letter == Capital)
+                if (Letter == Capital)
                 {
                     Win();
                     return;
@@ -86,9 +91,16 @@ namespace Hangman.Round
                         Lose();
                     }
                     return;
-                    
+
                 }
             }
+
+        }
+
+        public void CheckLetter()
+        {
+            string Letter = Console.ReadLine();
+            Letter = Letter.ToUpper();
 
 
 
@@ -161,12 +173,24 @@ namespace Hangman.Round
             {
                 NewGame();
 
+                char letter = ' ';
+
                 while (Good.Count != Capital.Length && Session == true)
                 {
-                    Console.WriteLine("Ysadasdasdas!");
                     PrintStatus();
 
-                    Check();
+                    Console.WriteLine("Do you want to guess a (l)eter or (w)ord");
+                    Console.WriteLine("(l/w)?");
+
+                    letter = Console.ReadLine().ToCharArray()[0];
+
+                    if (letter == 'l')
+                    {
+                        CheckLetter();
+                    } else
+                    {
+                        CheckWord();
+                    }
                     Console.Clear();
                 }
 
