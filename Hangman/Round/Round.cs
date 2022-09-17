@@ -35,7 +35,7 @@ namespace Hangman.Round
             Console.WriteLine(Guess);
             Console.WriteLine("Your lives: "+Lives);
             string badString=  new string(Bad.ToArray());
-//
+////
 
             Console.WriteLine("Not in word: " + badString);
 
